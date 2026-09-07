@@ -197,6 +197,55 @@
     split.appendChild(media);
   }
 
+  function appendStoryParagraph(container,text){
+    var paragraph=document.createElement('p');
+    paragraph.textContent=text;
+    container.appendChild(paragraph);
+    return paragraph;
+  }
+
+  function patchFoundationStory(){
+    var company=document.querySelector('#company');
+    if(!company)return;
+
+    var lang=currentLanguage();
+    var story=company.querySelector('.company-foundation-story');
+    if(story){
+      story.hidden=lang!=='en';
+      return;
+    }
+
+    var list=company.querySelector('.company-intro-list');
+    if(!list)return;
+
+    story=document.createElement('div');
+    story.className='company-foundation-story';
+    story.setAttribute('lang','en');
+    story.setAttribute('aria-labelledby','company-foundation-story-title');
+    story.hidden=lang!=='en';
+
+    var heading=document.createElement('h3');
+    heading.id='company-foundation-story-title';
+    heading.textContent='Sweet Spot’s Foundation Story and Purpose';
+    story.appendChild(heading);
+
+    appendStoryParagraph(story,'Sam’s experience across rights holders (WTA, FIFA), agencies (Octagon, CSM) and brands (AIG) has provided a comprehensive appreciation of the sports ecosystem and objectives and challenges across the various parties. In particular, the 8 years leading AIG’s sports marketing function ensured a focus on maximizing sponsorship benefits to achieve tangible business results.');
+
+    appendStoryParagraph(story,'Sweet Spot was founded to share this solution-focused experience and offer high level facilitation to multiple clients.');
+
+    var nameParagraph=document.createElement('p');
+    nameParagraph.appendChild(document.createTextNode('The name represents the sweet feeling when perfectly hitting a ball with the middle part of the bat, racquet or club. The logo brings together an ancient quartz crystal in the center of a traditional Mexican '));
+    var serape=document.createElement('em');
+    serape.textContent='serape';
+    nameParagraph.appendChild(serape);
+    nameParagraph.appendChild(document.createTextNode('.'));
+    story.appendChild(nameParagraph);
+
+    appendStoryParagraph(story,'Welcome to the Sweet Spot!');
+
+    list.insertAdjacentElement('afterend',story);
+  }
+
   function patchEmptySemantics(){
   document.querySelectorAll('.hero-lede,.hero-note,.section-title h2').forEach(function(element){
     if((element.textContent||'').trim()===''){
@@ -232,6 +281,7 @@
       patchHero();
       patchContact();
       patchCaseStudy();
+      patchFoundationStory();
       patchEmptySemantics();
     }finally{
       applying=false;
