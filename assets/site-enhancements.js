@@ -208,10 +208,9 @@
     var company=document.querySelector('#company');
     if(!company)return;
 
-    var lang=currentLanguage();
     var story=company.querySelector('.company-foundation-story');
     if(story){
-      story.hidden=lang!=='en';
+      story.hidden=false;
       return;
     }
 
@@ -222,7 +221,6 @@
     story.className='company-foundation-story';
     story.setAttribute('lang','en');
     story.setAttribute('aria-labelledby','company-foundation-story-title');
-    story.hidden=lang!=='en';
 
     var heading=document.createElement('h3');
     heading.id='company-foundation-story-title';
